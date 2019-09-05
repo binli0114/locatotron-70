@@ -4,9 +4,9 @@ frameworkVersion: ">=1.10.0"
 
 provider:
   name: aws
-  profile: locatotron
+  profile: telstra
   stage: dev
-  runtime: nodejs6.10
+  runtime: nodejs8.10
   environment:
     PGHOST:
       Fn::ImportValue: locatotronDBAddress-${self:provider.stage}
