@@ -4,7 +4,7 @@ frameworkVersion: ">=1.10.0"
 
 provider:
   name: aws
-  profile: locatotron
+  profile: telstra
   stage: dev
 
 resources:
@@ -48,8 +48,8 @@ resources:
         CidrBlock: 10.0.1.0/24
         AvailabilityZone:
           Fn::Select:
-            - '0'
-            - Fn::GetAZs: ''
+            - "0"
+            - Fn::GetAZs: ""
 
     privateSubnetB:
       Type: AWS::EC2::Subnet
@@ -59,8 +59,8 @@ resources:
         CidrBlock: 10.0.2.0/24
         AvailabilityZone:
           Fn::Select:
-            - '1'
-            - Fn::GetAZs: ''
+            - "1"
+            - Fn::GetAZs: ""
 
     publicSubnetA:
       Type: AWS::EC2::Subnet
@@ -70,8 +70,8 @@ resources:
         CidrBlock: 10.0.3.0/24
         AvailabilityZone:
           Fn::Select:
-            - '0'
-            - Fn::GetAZs: ''
+            - "0"
+            - Fn::GetAZs: ""
 
     routeTableLambdaPrivateA:
       Type: AWS::EC2::RouteTable
@@ -149,10 +149,10 @@ resources:
         VpcId:
           Ref: locatotronVPC
         SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: ${file(../config.${self:provider.stage}.json):db.port}
-          ToPort: ${file(../config.${self:provider.stage}.json):db.port}
-          CidrIp: 10.0.0.0/16
+          - IpProtocol: tcp
+            FromPort: ${file(../config.${self:provider.stage}.json):db.port}
+            ToPort: ${file(../config.${self:provider.stage}.json):db.port}
+            CidrIp: 10.0.0.0/16
 
     dbSubnetGroup:
       Type: AWS::RDS::DBSubnetGroup
@@ -178,9 +178,9 @@ resources:
         DBSubnetGroupName:
           Ref: dbSubnetGroup
         VPCSecurityGroups:
-        - Fn::GetAtt:
-          - dbSecurityGroup
-          - GroupId
+          - Fn::GetAtt:
+              - dbSecurityGroup
+              - GroupId
 
   Outputs:
     locatotronDBAddress:
